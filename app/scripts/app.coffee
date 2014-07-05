@@ -20,6 +20,9 @@ angular.module('githubIssuesApp', [
   # Configure App
   .config ($routeProvider, $locationProvider) ->
 
+    # Initialise Foundation
+    $(document).foundation();
+
     # Enable html5mode (no url hashbangs)
     $locationProvider.html5Mode yes
 
