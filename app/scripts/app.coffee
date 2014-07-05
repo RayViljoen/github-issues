@@ -8,12 +8,16 @@
  #
  # Main module of the application.
 ###
-angular
-  .module('githubIssuesApp', [
+angular.module('githubIssuesApp', [
+
+    'config'
     'ngRoute',
     'ngResource',
     'ngTouch'
+
   ])
+
+  # Configure App
   .config ($routeProvider, $locationProvider) ->
 
     # Enable html5mode (no url hashbangs)
