@@ -9,4 +9,4 @@
 angular.module('config', [])
 
 	# Set GitHub App Client ID - https://github.com/settings/applications/
-	.constant 'GITHUB', '0ce081b99794b170e23a'
+	.constant 'GITHUB_CLIENT_ID', '0ce081b99794b170e23a'
