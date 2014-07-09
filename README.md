@@ -19,3 +19,10 @@ Github App: `https://github.com/settings/applications/112864`
 
 5. run `grunt serve` to run locally and serve on port 9000 or run `grunt build` to build the app for production.
 
+
+#### OAuth
+
+- Handled with [OAuth.io](http://oauth.io/)
+
+- [OAuth.io](http://oauth.io/) account login via GitHub OAuth
+

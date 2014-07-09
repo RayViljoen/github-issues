@@ -8,40 +8,42 @@
  #
  # Main module of the application.
 ###
-angular.module('githubIssuesApp', [
+githubIssuesApp = angular.module('githubIssuesApp', [
 
     'config'
-    'ngRoute',
-    'ngResource',
+    'ngRoute'
     'ngTouch'
+    'ngStorage'
 
   ])
 
-  # Configure App
-  .config ($routeProvider, $locationProvider) ->
+###*
+ # Configure App
+###
+githubIssuesApp.config ($routeProvider, $locationProvider) ->
 
-    # Enable html5mode (no url hashbangs)
-    $locationProvider.html5Mode yes
+  # Enable html5mode (no url hashbangs)
+  $locationProvider.html5Mode yes
 
-    # Configure Routes
-    $routeProvider
+  # Configure Routes
+  $routeProvider
 
-      .when '/',
+    .when '/',
 
-        templateUrl: 'views/main.html'
-        controller: 'MainCtrl'
+      templateUrl: 'views/main.html'
 
-      .when '/about',
+    .when '/about',
 
-        templateUrl: 'views/about.html'
-        controller: 'AboutCtrl'
+      templateUrl: 'views/about.html'
+      controller: 'AboutCtrl'
 
-      .otherwise
-        redirectTo: '/'
+    .otherwise redirectTo: '/'
 
+###*
+ # Initialise scripts etc
+###
+githubIssuesApp.run ->
 
-  # Initialise scripts etc
-  .run ->
+  # Initialise Foundation
+  do $(document).foundation
 
-    # Initialise Foundation
-    $(document).foundation()

@@ -11,7 +11,7 @@
       <!-- Right Nav Section -->
       <ul class="right">
         <li class="active"><a href="/about">About</a></li>
-        <li ng-show="authd"><a href="/" ng-click="logout()">Log Out</a></li>
+        <li ><a href="/" ng-if="authStatus()" ng-click="oauth.signOut()">Sign Out</a></li>
       </ul>
 
       <!-- Left Nav Section -->

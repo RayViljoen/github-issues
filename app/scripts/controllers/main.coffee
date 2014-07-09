@@ -8,27 +8,17 @@
  # Controller of the githubIssuesApp
 ###
 angular.module('githubIssuesApp')
-  .controller 'MainCtrl', ($scope, $location, Auth) ->
+  .controller 'MainCtrl', ($scope, Oauth) ->
 
-  	console.log $location.url()
+    # Bind to Oauth service
+    $scope.oauth = Oauth
 
-  	# bind to the module authenticated state
-  	$scope.authd = Auth.isAuthenticated()
+    # Set auth status
+    $scope.authStatus = ->
+      do Oauth.isSignedIn
 
-  	# Log user out
-  	$scope.logout = -> Auth.logout()
+    # Listen for signin and apply scope
+    $scope.$on 'oauth_success', -> do $scope.$apply
 
-
-  	# /error=required_credentials
-  	# error_message=Could not find the credentials that match the provided client_id.
-  	# 				Register your app credentials by visiting https//auth-server.herokuapp.com
-	# state={
-	# 	"client_id" : "0ce081b99794b170e23a"
-	# 	"network" : "github"
-	# 	"display" : "page"
-	# 	"callback" : "_hellojs_8dfagm47"
-	# 	"state" : ""
-	# 	"oauth_proxy" : "https://auth-server.herokuapp.com/proxy"
-	# 	"scope" : "read:org,repo:sta…ithub.com/login/oauth/access_token"
-	# 	"response_type" : "code"
-	# 	}}
+    # $scope.$on 'oauth_fail', ->
+    #   # TODO: SHOW SOME ERROR DIALOG WHEN AUTH FAILS
