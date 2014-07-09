@@ -53,6 +53,7 @@ module.exports = function (grunt) {
     // The actual grunt server settings
     connect: {
       options: {
+        nospawn: true,
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
@@ -235,10 +236,15 @@ module.exports = function (grunt) {
       }
     },
 
-    // Replace Google CDN references
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/*.html']
+    coffeelint: {
+      app: ['<%= yeoman.app %>/scripts/**/*.coffee'],
+      tests: {
+        files: {
+          src: ['test/**/*.coffee']
+        }
+      },
+      options: {
+        configFile: 'coffeelint.json'
       }
     },
 
@@ -317,7 +323,6 @@ module.exports = function (grunt) {
     'concat',
     'ngmin',
     'copy:dist',
-    'cdnify',
     'cssmin',
     'uglify',
     'filerev',
