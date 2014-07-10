@@ -10,25 +10,10 @@
 angular.module('githubIssuesApp')
   .factory 'github', ($http, $q, oauth) ->
 
+
     # API Hostname
     apiHost = 'https://api.github.com'
 
-    ###
-     # Build GitHub query string
-     # @param  {string} path  API request path
-     # @param  {object} query Object of name=val query params
-     # @return {string}       Final query string (url)
-    ###
-    apiUrl = (path, query = null) ->
-
-      # Build query
-      url = apiHost + path + '?access_token=' + oauth.getAccessToken()
-
-      # Add any available query params
-      (url += "&#{param}=#{val}" for param, val of query) if query
-
-      # Return url
-      url
 
     ###
      # Perform a GET rquest to the GitHub API
@@ -38,13 +23,16 @@ angular.module('githubIssuesApp')
      # @param  {object} params Query parameters (optional)
      # @return {object}        Promise object
     ###
-    get = (path, params = null) ->
+    get = (path, params = {}) ->
+
+      # Add access_token to params object
+      params.access_token = oauth.getAccessToken()
 
       # Create a promise
       deffered = do $q.defer
 
       # Do get request
-      $http.get( apiUrl path, params )
+      $http.get( apiHost + path, {params} )
 
         # Resolve promise with success response
         .success (res) -> deffered.resolve res
@@ -53,7 +41,7 @@ angular.module('githubIssuesApp')
         .error (err, code) ->
 
           # Reject promise
-          deferred.reject err.message
+          deffered.reject err.message
 
           # Handle auth failure
           if code is 401

@@ -13,8 +13,8 @@ angular.module('githubIssuesApp')
     # Bind to Oauth service
     $scope.oauth = oauth
 
-    $scope.testGet = (path) ->
-        github.get(path).then (res) -> console.log res
+    $scope.testGet = (path, params) ->
+        github.get(path, params).then (res) -> console.log res
 
     # Set auth status
     $scope.authStatus = ->

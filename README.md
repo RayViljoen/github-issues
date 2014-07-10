@@ -26,3 +26,11 @@ Github App: `https://github.com/settings/applications/112864`
 
 - [OAuth.io](http://oauth.io/) account login via GitHub OAuth
 
+### GitHub
+
+**Get all issues:**
+`/issues` - https://developer.github.com/v3/issues/#parameters
+
+**Get all comments for issue**
+`/repos/:owner/:repo/issues/:number/comments`
+

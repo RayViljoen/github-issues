@@ -14,13 +14,19 @@ githubIssuesApp = angular.module('githubIssuesApp', [
     'ngRoute'
     'ngTouch'
     'ngStorage'
+    'ngAnimate'
+    'angular-loading-bar'
+    'cgBusy'
 
   ])
 
 ###*
  # Configure App
 ###
-githubIssuesApp.config ($routeProvider, $locationProvider) ->
+githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider) ->
+
+  # Disable loading bar spinner
+  cfpLoadingBarProvider.includeSpinner = no
 
   # Enable html5mode (no url hashbangs)
   $locationProvider.html5Mode yes
