@@ -8,48 +8,50 @@
  # Service in the githubIssuesApp.
 ###
 angular.module('githubIssuesApp')
-  .service 'Oauth', ($rootScope, OAUTH_CLIENT_ID) ->
+  .service 'oauth', ($rootScope, OAUTH_CLIENT_ID) ->
 
     # Current auth_token
-    authToken = null
+    accessToken = null
 
     # Init OAuth.io with token caching
     OAuth.initialize OAUTH_CLIENT_ID, cache: yes
 
-
     ###
-     # Attempt to create a fresh auth token
+     # Attempt to create a fresh access token
      # Set the new token or null if failed
-     # Run this immediattely to attempt setting auth_token
-     # @return {string} auth_token
+     # Run this immediattely to attempt setting access_token
+     # @return {string} access_token
     ###
-    do @getAuthToken = ->
+    do @getAccessToken = ->
+
+      # Return existing token if exists
+      return accessToken if accessToken
+
+      # Else continue to create token
       if tokenObj = OAuth.create 'github'
-        authToken = tokenObj.access_token
+        accessToken = tokenObj.access_token
       else
-        authToken = null
+        accessToken = null
 
-      console.log authToken
-
-      # Return auth_token
-      authToken
+      # Return access_token
+      accessToken
 
 
     ###
-     # Check whether a auth_token exists and is stored
-     # @return {Boolean} Whether auth token exists ie. signe in
+     # Check whether a access_token exists and is stored
+     # @return {Boolean} Whether access token exists ie. signe in
     ###
-    @isSignedIn = -> authToken?
+    @isSignedIn = -> accessToken?
 
 
     ###
-     # Clear all auth tokens (sign out)
+     # Clear all access tokens (sign out)
      # Fire signout event
     ###
     @signOut = ->
       console.log 'Signed Out'
       OAuth.clearCache 'github'
-      authToken = null
+      accessToken = null
 
 
     ###
@@ -60,7 +62,7 @@ angular.module('githubIssuesApp')
 
       # Auth popup options
       popupOpts =
-        cache: yes      # Store auth token in browser
+        cache: yes      # Store access token in browser
         wnd_settings:   # Popup window options
           width: 1080
           height: 650
@@ -76,7 +78,7 @@ angular.module('githubIssuesApp')
         # Broadcast success and set auth_token
         else if result.access_token
           console.log 'Signed In'
-          authToken = result.access_token
+          accessToken = result.access_token
           $rootScope.$broadcast 'oauth_success'
 
       return

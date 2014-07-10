@@ -8,14 +8,19 @@
  # Controller of the githubIssuesApp
 ###
 angular.module('githubIssuesApp')
-  .controller 'MainCtrl', ($scope, Oauth) ->
+  .controller 'MainCtrl', ($scope, oauth, github) ->
 
     # Bind to Oauth service
-    $scope.oauth = Oauth
+    $scope.oauth = oauth
+
+    $scope.testGet = (path) ->
+        github.get(path).then (res) -> console.log res
 
     # Set auth status
     $scope.authStatus = ->
-      do Oauth.isSignedIn
+      do oauth.isSignedIn
+
+    $scope.gh = github
 
     # Listen for signin and apply scope
     $scope.$on 'oauth_success', -> do $scope.$apply
