@@ -1,6 +1,6 @@
 'use strict'
 
-###*
+###
  # @ngdoc function
  # @name githubIssuesApp.controller:AboutCtrl
  # @description

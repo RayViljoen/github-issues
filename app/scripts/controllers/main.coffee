@@ -13,18 +13,10 @@ angular.module('githubIssuesApp')
     # Bind to Oauth service
     $scope.oauth = oauth
 
-    $scope.testGet = (path, params) ->
-        github.get path, params
-          .then (res) ->
-
-            console.log res
-
-
-    # Set auth status
-    $scope.authStatus = ->
-      do oauth.isSignedIn
-
-    $scope.gh = github
+    # Scroll page back to top
+    $scope.top = ->
+        $('html, body').animate {scrollTop: 0}, 500
+        return
 
     # Listen for signin and apply scope
     $scope.$on 'oauth_success', -> do $scope.$apply

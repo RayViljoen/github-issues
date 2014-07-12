@@ -1,0 +1,122 @@
+
+body {
+  padding-top: 75px;
+}
+
+/*******************************************************
+ *   Force pointer on all font-icons, links & buttons
+ ******************************************************/
+button, button .mega-octicon, button .octicon,
+a, a .mega-octicon, a .octicon {
+  cursor: pointer;
+}
+
+/*******************************************************
+ *   Signin
+ ******************************************************/
+
+.signin {
+  padding: 35px 0;
+}
+
+.signin button {
+  font-size: 25px;
+  padding: 30px 40px;
+}
+
+.signin button .mega-octicon {
+  padding-right: 12px;
+}
+
+/*******************************************************
+ *   Browsehappy banner
+ ******************************************************/
+#browsehappy {
+  padding: 25px 0;
+}
+
+/*******************************************************
+ *   Footer
+ ******************************************************/
+
+footer {
+  padding: 30px 0 10px;
+}
+
+
+/*******************************************************
+ *   ngAnimate transitions
+ ******************************************************/
+.animate-enter,
+.animate-leave
+{
+    -webkit-transition: 1400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 1400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 1400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 1400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 1400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space:nowrap;
+}
+
+.animate-leave.animate-leave-active,
+.animate-enter {
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+}
+
+.animate-enter.animate-enter-active,
+.animate-leave {
+    opacity: 1;
+    width: 150px;
+    height: 30px;
+}
+
+/*******************************************************
+ *   Responsive text-align
+ ******************************************************/
+
+/* Defaults */
+.text-center-sm,
+.text-center-md,
+.text-center-lg,
+.text-right-sm,
+.text-right-md,
+.text-right-lg { text-align: inherit; }
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Define xs styles after defaults so they take precedence */
+.text-center-xs { text-align: center; }
+.text-right-xs { text-align: right; }
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+  .text-center-sm, .text-center-xs { text-align: center; }
+  .text-right-sm, .text-right-xs { text-align: right; }
+
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+  .text-center-md, .text-center-sm, .text-center-xs { text-align: center; }
+  .text-right-md, .text-right-sm, .text-right-xs { text-align: right; }
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+  .text-center-lg, .text-center-md, .text-center-sm, .text-center-xs { text-align: center; }
+  .text-right-lg, .text-right-md, .text-right-sm, .text-right-xs { text-align: right; }
+
+}
+
+

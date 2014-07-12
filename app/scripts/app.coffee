@@ -50,6 +50,6 @@ githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider
 ###
 githubIssuesApp.run ->
 
-  # Initialise Foundation
-  do $(document).foundation
+  # Initialise tasks
+  console.log 'ng-ready'
 
