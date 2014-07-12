@@ -3,12 +3,25 @@ body {
   padding-top: 75px;
 }
 
+.radius {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
 /*******************************************************
  *   Force pointer on all font-icons, links & buttons
  ******************************************************/
 button, button .mega-octicon, button .octicon,
 a, a .mega-octicon, a .octicon {
   cursor: pointer;
+}
+
+/*******************************************************
+ *   Nav bar
+ ******************************************************/
+#avatar {
+  margin-top: -5px;
 }
 
 /*******************************************************
@@ -95,11 +108,26 @@ footer {
 .text-center-xs { text-align: center; }
 .text-right-xs { text-align: right; }
 
+.navbar-right {
+  float: right !important;
+}
+.navbar-nav.navbar-right:last-child {
+margin-right: -15px;
+}
+.navbar-nav {
+  margin: 0;
+}
+.navbar-nav > li {
+float: left;
+}
+
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
 
   .text-center-sm, .text-center-xs { text-align: center; }
   .text-right-sm, .text-right-xs { text-align: right; }
+
+
 
 }
 
@@ -118,5 +146,6 @@ footer {
   .text-right-lg, .text-right-md, .text-right-sm, .text-right-xs { text-align: right; }
 
 }
+
 
 

@@ -23,7 +23,7 @@ githubIssuesApp = angular.module('githubIssuesApp', [
 ###*
  # Configure App
 ###
-githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider) ->
+githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider, TITLE) ->
 
   # Disable loading bar spinner
   cfpLoadingBarProvider.includeSpinner = no
@@ -34,16 +34,18 @@ githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider
   # Configure Routes
   $routeProvider
 
+    # Issues Summary. Signed in home
     .when '/',
+      templateUrl: 'views/issues.html'
+      controller: 'IssuesCtrl'
 
-      templateUrl: 'views/main.html'
+    # Error (404), but error is a bit for app-like
+    .when '/error',
+      templateUrl: 'views/error.html'
+      controller: 'ErrorCtrl'
 
-    .when '/about',
-
-      templateUrl: 'views/about.html'
-      controller: 'AboutCtrl'
-
-    .otherwise redirectTo: '/'
+    # Redirect any unfound requests to /error
+    .otherwise redirectTo: '/error'
 
 ###*
  # Initialise scripts etc

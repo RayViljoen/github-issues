@@ -3,6 +3,9 @@
 
 module.exports = function (grunt) {
 
+  // Require connect mod_rewrite for html5 mode
+  var modRewrite = require('connect-modrewrite');
+
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
@@ -64,6 +67,7 @@ module.exports = function (grunt) {
           open: false,
           middleware: function (connect) {
             return [
+              modRewrite(['^[^\\.]*$ /index.html [L]']),
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',

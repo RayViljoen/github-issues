@@ -22,7 +22,7 @@ angular.module('githubIssuesApp')
     parseLinkHeader = (linkHeader) ->
 
       # Return if no linkHeader
-      return unless linkHeader
+      return null unless linkHeader
 
       # Split links in header
       links = linkHeader.split ','
