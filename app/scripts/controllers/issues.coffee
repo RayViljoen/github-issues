@@ -9,8 +9,4 @@
 ###
 angular.module('githubIssuesApp')
   .controller 'IssuesCtrl', ($scope) ->
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate'
-      'AngularJS'
-      'Karma'
-    ]
+

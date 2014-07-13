@@ -24,6 +24,12 @@ a, a .mega-octicon, a .octicon {
   margin-top: -5px;
 }
 
+# Overwrite navbar collapsing
+.navbar-right { float: right !important; }
+.navbar-nav.navbar-right:last-child { margin-right: -15px; }
+.navbar-nav { margin: 0; }
+.navbar-nav > li { float: left; }
+
 /*******************************************************
  *   Signin
  ******************************************************/
@@ -107,19 +113,6 @@ footer {
 /* Define xs styles after defaults so they take precedence */
 .text-center-xs { text-align: center; }
 .text-right-xs { text-align: right; }
-
-.navbar-right {
-  float: right !important;
-}
-.navbar-nav.navbar-right:last-child {
-margin-right: -15px;
-}
-.navbar-nav {
-  margin: 0;
-}
-.navbar-nav > li {
-float: left;
-}
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {

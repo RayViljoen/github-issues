@@ -13,9 +13,6 @@ angular.module('githubIssuesApp')
     # Bind to Oauth service
     $scope.oauth = oauth
 
-    # Toggle tooltip
-    do $('#signout').tooltip
-
     # Get user credentials
     do updateUserInfo = ->
 
@@ -43,7 +40,7 @@ angular.module('githubIssuesApp')
     # in this event by come method, then $scope.$apply must
     # be called explicitly to update to the new signed in view
     # -----------------------------------------------------------
-    $scope.$on 'oauth_success', ->
+    $scope.$on 'oauth_signin', ->
 
         #Update user data
         do updateUserInfo

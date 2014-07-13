@@ -46,12 +46,13 @@ angular.module('githubIssuesApp')
 
     ###
      # Clear all access tokens (sign out)
-     # Fire signout event
+     # Broadcast signout event
     ###
     @signOut = ->
       console.log 'Signed Out'
       OAuth.clearCache 'github'
       accessToken = null
+      $rootScope.$broadcast 'oauth_signout'
 
 
     ###
@@ -79,7 +80,7 @@ angular.module('githubIssuesApp')
         else if result.access_token
           console.log 'Signed In'
           accessToken = result.access_token
-          $rootScope.$broadcast 'oauth_success'
+          $rootScope.$broadcast 'oauth_signin'
 
       return
 

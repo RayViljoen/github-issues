@@ -23,7 +23,7 @@ githubIssuesApp = angular.module('githubIssuesApp', [
 ###*
  # Configure App
 ###
-githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider, TITLE) ->
+githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider) ->
 
   # Disable loading bar spinner
   cfpLoadingBarProvider.includeSpinner = no
@@ -54,4 +54,8 @@ githubIssuesApp.run ->
 
   # Initialise tasks
   console.log 'ng-ready'
+
+  $ ->
+    # Toggle all tooltips
+    do $('.init-tooltip').tooltip
 

@@ -30,9 +30,7 @@
   <body ng-app="githubIssuesApp" ng-controller="MainCtrl">
 
       <!-- Header -->
-      <!-- <div ng-include="'views/header.html'"></div> -->
-
-      <nav ng-if="oauth.isSignedIn()" class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <nav ng-show="oauth.isSignedIn()" class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
           <a class="navbar-brand" href="/">GitHub Issues</a>
 
@@ -46,7 +44,7 @@
             </li>
 
             <li>
-              <a href="" id="signout" class="" data-toggle="tooltip" data-placement="bottom" title="Sign Out" ng-click="oauth.signOut()">
+              <a href="" class="init-tooltip" data-delay="200" data-container="body" data-toggle="tooltip" data-placement="right" title="Sign Out" ng-click="oauth.signOut()">
                 <span class="octicon octicon-sign-out"></span>
               </a>
             </li>
@@ -67,7 +65,7 @@
       <div class="container" role="main">
 
         <!-- Log In Form -->
-        <div ng-if="!oauth.isSignedIn()" class="jumbotron">
+        <div ng-hide="oauth.isSignedIn()" class="jumbotron">
           <div class="container">
             <div class="row">
               <div class="col-md-8 text-center text-left-md">
@@ -84,7 +82,7 @@
         </div>
 
         <!-- Angular Route Render -->
-        <div ng-view="" ng-if="oauth.isSignedIn()"></div>
+        <div ng-view="" ng-show="oauth.isSignedIn()"></div>
 
         <!-- Footer -->
         <footer>
@@ -137,7 +135,6 @@
         <script src="scripts/config.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
         <script src="scripts/services/github.js"></script>
         <script src="scripts/services/oauth.js"></script>
         <script src="scripts/directives/issue.js"></script>
