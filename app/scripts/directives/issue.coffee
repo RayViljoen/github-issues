@@ -9,7 +9,7 @@
 angular.module('githubIssuesApp')
   .directive 'issue', ->
 
-    template: '<div>TEMPLATE CONTENT</div>'
+    templateUrl: '/views/directive_templates/issue.html'
     restrict: 'E'
-    link: (scope, element, attrs) ->
-      element.text 'this is the issue directive'
+    # link: (scope, element, attrs) ->
+    #   element.text 'this is the issue directive'

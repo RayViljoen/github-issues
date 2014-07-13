@@ -31,13 +31,24 @@ githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider
   # Enable html5mode (no url hashbangs)
   $locationProvider.html5Mode yes
 
+  # Route config for all issue summary paths ( all issues, repo issues, org issues )
+  issuesMainCnf =
+    templateUrl: 'views/issues.main.html'
+    controller: 'IssuesCtrl'
+    reloadOnSearch: no
+
   # Configure Routes
   $routeProvider
 
     # Issues Summary. Signed in home
-    .when '/',
-      templateUrl: 'views/issues.html'
-      controller: 'IssuesCtrl'
+    .when '/', issuesMainCnf
+
+    # Issues Summary for specific repo.
+    .when '/repo/:repo', issuesMainCnf
+
+    # Issues Summary for specific orginisation.
+    .when '/org/:org', issuesMainCnf
+
 
     # Error (404), but error is a bit for app-like
     .when '/error',
@@ -55,7 +66,8 @@ githubIssuesApp.run ->
   # Initialise tasks
   console.log 'ng-ready'
 
-  $ ->
+  # jQuery DOM ready
+  # $ ->
     # Toggle all tooltips
-    do $('.init-tooltip').tooltip
+    # do $('.init-tooltip').tooltip
 
