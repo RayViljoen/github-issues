@@ -32,10 +32,15 @@ angular.module('githubIssuesApp')
 
       # Loop links
       for link in links
-        # Parse 'rel'
-        rel = (link.match /rel="\w*/i)[0].replace 'rel="', ''
+
+        # Parse 'rel'.
+        # eg. Match ( rel="next), and remove ( rel=") first 6 chars from match[0]
+        rel = link.match(/\srel="\w*/i)[0][6..]
+
         # Parse 'page'
-        page = (link.match /page=\d*/i)[0].replace 'page=', ''
+        # eg. Match (&page=1), and remove (&page=) first 6 chars from match[0]
+        # Important that this includes the leadin & or ? to ensure it not the per_page
+        page = link.match(/[?&]page=\d*/i)[0][6..]
         # Add to response object
         res[rel] = page
 
@@ -75,17 +80,51 @@ angular.module('githubIssuesApp')
 
 
     ###
-     # Duplicate of `query`, but performs pagination requests.
-     # All pagination requests get merged and resolved by single promise
+     # Duplicate of `query`, but performs all paginated requests.
+     # All paginated results get merged and resolved by single promise
      # Requests are still done via the standard query function, so error
      # handling, options etc. is unchanged.
      # the user is signed out to clear the current access token
      # @param  {string} path    Query path. (As per GitHub docs)
      # @param  {object} params  Query parameters (optional)
-     # @param  {bool}   links   If truth then promise response will include pagination object
      # @return {object}         Promise object
     ###
-    queryAll = (path, params={}, getLinks) -> null
+    queryAll = (path, params={}) ->
+
+      # Force per_page: 100 and page: 1
+      # Cannot see any situation the max wouldn't apply to this function
+      params.per_page = 100
+      params.page = 1
+
+      # Create a promise
+      deffered = do $q.defer
+
+      # Rsponse array
+      response = []
+
+      # Perform request starting at page 1
+      # If links.next exists then request that etc.
+      do getPage = (page=1) ->
+
+        # Set page to query params
+        params.page = page
+
+        # Do query with links obviously
+        query(path, params, yes).then (res) ->
+
+          # Concat the res.data to the response array
+          response = response.concat res.data
+
+          # If another page exists (next), then call
+          # this fn again with the next page number
+          if res.links and res.links.next then getPage res.links.next
+
+          # Else we've reached the last page, so
+          # resolve with the response array
+          else deffered.resolve response
+
+      # Return the promise
+      deffered.promise
 
 
     ###
@@ -94,10 +133,10 @@ angular.module('githubIssuesApp')
      # the user is signed out to clear the current access token
      # @param  {string} path    Query path. (As per GitHub docs)
      # @param  {object} params  Query parameters (optional)
-     # @param  {bool}   links   If truth then promise response will include pagination object
+     # @param  {bool}   doLinks If truth then promise response will include pagination object
      # @return {object}         Promise object
     ###
-    query = (path, params={}, getlinks) ->
+    query = (path, params={}, doLinks) ->
 
       # Prepare path
       path = preparePath(path)
@@ -117,11 +156,11 @@ angular.module('githubIssuesApp')
         # Resolve promise with success response
         .success (data, status, headers) ->
 
-          # Get pagination links if links option is set
-          links = parseLinkHeader headers('Link') if getlinks
+          # Get pagination links if doLinks option is set
+          links = parseLinkHeader headers('Link') if doLinks
 
           # Create res object
-          res = if links then {data, links} else data
+          res = if doLinks then {data, links} else data
 
           # Resolve promise
           deffered.resolve res
@@ -131,6 +170,9 @@ angular.module('githubIssuesApp')
 
           # Reject promise
           deffered.reject err.message
+
+          # TODO: Handle simple request error with notification of some sort
+          # Possibly have a try again button or something
 
           # Handle auth failure
           if code is 401
