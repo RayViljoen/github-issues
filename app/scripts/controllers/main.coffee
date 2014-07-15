@@ -8,25 +8,18 @@
  # Controller of the githubIssuesApp
 ###
 angular.module('githubIssuesApp')
-  .controller 'MainCtrl', ($scope, oauth, github) ->
+  .controller 'MainCtrl', ($scope, oauth, github, $q, $http) ->
 
     # Bind to Oauth service
     $scope.oauth = oauth
 
     # Get user credentials
     do updateUserInfo = ->
-
       # Don't bother if not signed in
       return unless oauth.isSignedIn()
-
-      # Get user data
-      github.get '/user'
-      .then (res) ->
-        # Update user scope params
-        $scope.user =
-          name: res.data.name
-          avatar: res.data.avatar_url
-          profile: res.data.html_url
+      # Get user data and bind $scope.user
+      github.getCached('/user').then (data) ->
+        $scope.user = data
 
 
     # Scroll page back to top

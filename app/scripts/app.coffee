@@ -12,8 +12,8 @@ githubIssuesApp = angular.module('githubIssuesApp', [
 
     'config'
     'ngRoute'
+    'LocalForageModule'
     'ngTouch'
-    'ngStorage'
     'ngAnimate'
     'angular-loading-bar'
     'cgBusy'
@@ -23,7 +23,7 @@ githubIssuesApp = angular.module('githubIssuesApp', [
 ###*
  # Configure App
 ###
-githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider) ->
+githubIssuesApp.config ($routeProvider, $locationProvider, $localForageProvider, cfpLoadingBarProvider) ->
 
   # Disable loading bar spinner
   cfpLoadingBarProvider.includeSpinner = no
@@ -37,7 +37,9 @@ githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider
     controller: 'IssuesCtrl'
     reloadOnSearch: no
 
-  # Configure Routes
+  #################################
+   #  Configure Angular Router
+  #################################
   $routeProvider
 
     # Issues Summary. Signed in home
@@ -57,6 +59,16 @@ githubIssuesApp.config ($routeProvider, $locationProvider, cfpLoadingBarProvider
 
     # Redirect any unfound requests to /error
     .otherwise redirectTo: '/error'
+
+
+  #################################
+   #  Configure LocalForage
+  #################################
+  $localForageProvider.config
+        driver: 'localStorageWrapper'
+        name: 'github_issues'
+        storeName: 'ghi'
+
 
 ###*
  # Initialise scripts etc

@@ -15,4 +15,3 @@ angular.module('githubIssuesApp')
 
     # Check if this is issues for a specific orginisation only
     org = $routeParams.org
-
