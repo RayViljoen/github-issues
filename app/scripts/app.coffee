@@ -23,7 +23,14 @@ githubIssuesApp = angular.module('githubIssuesApp', [
 ###*
  # Configure App
 ###
-githubIssuesApp.config ($routeProvider, $locationProvider, $localForageProvider, cfpLoadingBarProvider) ->
+githubIssuesApp.config (
+
+  $routeProvider
+  $locationProvider
+  $localForageProvider
+  cfpLoadingBarProvider
+
+  ) ->
 
   # Disable loading bar spinner
   cfpLoadingBarProvider.includeSpinner = no
@@ -31,7 +38,7 @@ githubIssuesApp.config ($routeProvider, $locationProvider, $localForageProvider,
   # Enable html5mode (no url hashbangs)
   $locationProvider.html5Mode yes
 
-  # Route config for all issue summary paths ( all issues, repo issues, org issues )
+  # Route config for all issue summary paths
   issuesMainCnf =
     templateUrl: 'views/issues.main.html'
     controller: 'IssuesCtrl'
@@ -51,7 +58,6 @@ githubIssuesApp.config ($routeProvider, $locationProvider, $localForageProvider,
     # Issues Summary for specific orginisation.
     .when '/org/:org', issuesMainCnf
 
-
     # Error (404), but error is a bit for app-like
     .when '/error',
       templateUrl: 'views/error.html'
@@ -65,9 +71,9 @@ githubIssuesApp.config ($routeProvider, $locationProvider, $localForageProvider,
    #  Configure LocalForage
   #################################
   $localForageProvider.config
-        driver: 'localStorageWrapper'
-        name: 'github_issues'
-        storeName: 'ghi'
+    driver: 'localStorageWrapper'
+    name: 'github_issues'
+    storeName: 'ghi'
 
 
 ###*

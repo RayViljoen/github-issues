@@ -34,12 +34,16 @@ angular.module('githubIssuesApp')
       for link in links
 
         # Parse 'rel'.
-        # eg. Match ( rel="next), and remove ( rel=") first 6 chars from match[0]
+        # Match ( rel="next), and remove first 6 chars from match[0]
+        # First 6 chars being ( rel=")
         rel = link.match(/\srel="\w*/i)[0][6..]
 
         # Parse 'page'
-        # eg. Match (&page=1), and remove (&page=) first 6 chars from match[0]
-        # Important that this includes the leadin & or ? to ensure it not the per_page
+        # Match (&page=1), and remove first 6 chars from match[0]
+        # First 6 chars being (&page=)
+        # IMPORTANT pattern includes leading & or ?
+        # This ensures it is the correct param
+        # e.g. Otherwise 'per_page' param would also match
         page = link.match(/[?&]page=\d*/i)[0][6..]
         # Add to response object
         res[rel] = page
@@ -133,7 +137,7 @@ angular.module('githubIssuesApp')
      # the user is signed out to clear the current access token
      # @param  {string} path    Query path. (As per GitHub docs)
      # @param  {object} params  Query parameters (optional)
-     # @param  {bool}   doLinks If truth then promise response will include pagination object
+     # @param  {bool}   doLinks Includes pagination object in promise val
      # @return {object}         Promise object
     ###
     query = (path, params={}, doLinks) ->
@@ -151,35 +155,35 @@ angular.module('githubIssuesApp')
       deffered = do $q.defer
 
       # Do get request
-      $http.get( apiHost + path, {params} )
+      p = $http.get( apiHost + path, {params} )
 
         # Resolve promise with success response
-        .success (data, status, headers) ->
+      p.success (data, status, headers) ->
 
-          # Get pagination links if doLinks option is set
-          links = parseLinkHeader headers('Link') if doLinks
+        # Get pagination links if doLinks option is set
+        links = parseLinkHeader headers('Link') if doLinks
 
-          # Create res object
-          res = if doLinks then {data, links} else data
+        # Create res object
+        res = if doLinks then {data, links} else data
 
-          # Resolve promise
-          deffered.resolve res
+        # Resolve promise
+        deffered.resolve res
 
-        # On error
-        .error (err, code) ->
+      # On error
+      p.error (err, code) ->
 
-          # Reject promise
-          deffered.reject err.message
+        # Reject promise
+        deffered.reject err.message
 
-          # TODO: Handle simple request error with notification of some sort
-          # Possibly have a try again button or something
+        # TODO: Handle simple request error with notification of some sort
+        # Possibly have a try again button or something
 
-          # Handle auth failure
-          if code is 401
-            console.log 'Unauthorised API Call'
-            console.log 'Signing out'
-            # Sign browser out and remove cache to foce re-auth
-            do oauth.signOut
+        # Handle auth failure
+        if code is 401
+          console.log 'Unauthorised API Call'
+          console.log 'Signing out'
+          # Sign browser out and remove cache to foce re-auth
+          do oauth.signOut
 
         # Return the promise
         deffered.promise
