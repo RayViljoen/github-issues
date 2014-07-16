@@ -8,10 +8,7 @@
  # Controller of the githubIssuesApp
 ###
 angular.module('githubIssuesApp')
-  .controller 'IssuesCtrl', ($scope, $routeParams) ->
+  .controller 'IssuesCtrl', ($scope) ->
 
-    # Check if this is issues for a specific repo
-    repo = $routeParams.repo
 
-    # Check if this is issues for a specific orginisation only
-    org = $routeParams.org
+

@@ -10,6 +10,7 @@
 angular.module('githubIssuesApp')
   .factory 'github', ($http, $q, $localForage, oauth) ->
 
+
     # API Hostname
     apiHost = 'https://api.github.com'
 
@@ -142,6 +143,8 @@ angular.module('githubIssuesApp')
     ###
     query = (path, params={}, doLinks) ->
 
+      console.log 'Query'
+
       # Prepare path
       path = preparePath(path)
 
@@ -185,63 +188,132 @@ angular.module('githubIssuesApp')
           # Sign browser out and remove cache to foce re-auth
           do oauth.signOut
 
-        # Return the promise
-        deffered.promise
-
+      # Return the promise
+      deffered.promise
 
 
     ###
      # Mimics query functions, but attempts to retreive from storage (cache).
      # If cached key isn't set, then it's queried and stored.
-     # Can also be forced to update data.
+     # Can also be forced to refresh data.
      # Key used for storage/cache is generated based on the query path.
      #
      #   This function should be treated as a standard query with the exception
      #   of not supporting links (paginated cache makes no sense) and having the
-     #   update option.
+     #   refresh option.
      #
      #   The params object also supports a custom `queryall` param.
      #   If `queryall` is true then queryAll will be used instead of query
      #
-     # @param  {string} path    Query path. (As per GitHub docs)
-     # @param  {object} params  Query parameters (optional)
-     # @param  {bool}   update  If true then cache is updated
-     # @return {object}         Promise object
+     # @param  {string} path     Query path. (As per GitHub docs)
+     # @param  {object} params   Query parameters (optional)
+     # @param  {bool}   refresh  If true then cache is refreshed
+     # @return {object}          Promise object
     ###
-    getCached = (path, params={}, update) ->
-
-      # Get cache key
-      key = createCacheKey path
-
-      # Check whether results needs to use queryAll or just query
-      qfn = if params.queryall then queryAll else query
+    getCached = (path, params={}, refresh) ->
 
       # Create a promise
       deffered = do $q.defer
 
-      # Try to get cached data
-      $localForage.getItem(key).then (data) ->
-        # If forced to update ot cache returned null
-        # then do query
-        if update or not data
-          qfn(path, params).then (data) ->
+      # Get cache key
+      key = createCacheKey path
 
-            # Store/update data
-            $localForage.setItem key, data
+      # ------------------------------------------------------------
+      # Backup function for if cache isn't set
+      queryData = ->
 
-            # Resolve promise with new query data
-            deffered.resolve data
+        # Check whether results needs to use queryAll or just query
+        qfn = if params.queryall then queryAll else query
+        # Do query/queryAll
+        qfn(path, params).then (data) ->
+
+          # Store data
+          $localForage.setItem key, data
+
+          # Resolve promise with new query data
+          deffered.resolve data
+      # ------------------------------------------------------------
+
+      # Try to get cached data unless forced to refresh
+      unless refresh then $localForage.getItem(key).then (data) ->
+
+        # If cache isn't set then do query
+        if data is null then do queryData
 
         # Else simply resolve with cache data
         else deffered.resolve data
+
+      # Else if forced to refresh go straight to query
+      else do queryData
 
       # Return the promise
       deffered.promise
 
 
+    ###
+     # A special helper function for retreiving ALL
+     # repos a user is associated with. To do this we
+     # get the user's own repos and then add the repos
+     # from each orginization the user belongs to.
+     # @param  {bool}   refresh  If true then cache is refreshed
+     # @return {object}          Promise object
+    ###
+    getRepos = (refresh) ->
 
+      # Final repos array
+      repos = []
+
+      # Create a promise
+      deffered = do $q.defer
+
+      # ------------------------------------------------------------
+      # Backup function for if cache isn't set
+      queryRepos = ->
+
+        # Get user orgs. Doing getCached as this is as
+        # good an oppertunity as any to update the cached orgs.
+        getCached('/user/orgs', null, yes).then (orgs) ->
+
+          # Collection of promises to pass to $.all
+          queries = []
+
+          # User's own repos
+          queries.push queryAll('/user/repos')
+
+          # User's org repos
+          for org in orgs
+            queries.push queryAll("/orgs/#{org.login}/repos")
+
+          # Process all promises
+          $q.all(queries).then (repos) ->
+
+            # Flatten individual results (shallow)
+            repos = _.flatten repos, yes
+
+            # Store repos
+            $localForage.setItem 'repos', repos
+
+            # Resolve response promise
+            deffered.resolve repos
+      # ------------------------------------------------------------
+
+      # Try to get cached data unless forced to refresh
+      unless refresh then $localForage.getItem('repos').then (cachedRepos) ->
+
+        # If cache isn't set then do query
+        if cachedRepos is null then do queryRepos
+
+        # Else simply resolve with cache data
+        else deffered.resolve cachedRepos
+
+      # Else if forced to refresh go straight to query
+      else do queryRepos
+
+      # Return the promise
+      deffered.promise
 
 
     ########################################################
     # Return Public API
-    { query, queryAll, getCached }
+    { query, queryAll, getCached, getRepos }
+
