@@ -240,6 +240,7 @@ module.exports = function (grunt) {
 
   });
 
+  // Spawns connect server and livereloads dev env
   grunt.registerTask('serve', 'Start working on this project from a connect server.', [
       'clean',
       'coffee:compile',
@@ -247,6 +248,7 @@ module.exports = function (grunt) {
       'watch'
     ]);
 
+  // Build to dist/
   grunt.registerTask('build', [
     'clean',
     'coffeelint',
@@ -262,6 +264,12 @@ module.exports = function (grunt) {
     'htmlmin'
   ]);
 
+  // Perform any linting, tests etc.
+  grunt.registerTask('review', [
+    'coffeelint'
+  ]);
+
+  // Default to serve
   grunt.registerTask('default', [
     'serve'
   ]);
