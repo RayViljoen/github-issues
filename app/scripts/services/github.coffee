@@ -143,8 +143,6 @@ angular.module('githubIssuesApp')
     ###
     query = (path, params={}, doLinks) ->
 
-      console.log 'Query'
-
       # Prepare path
       path = preparePath(path)
 

@@ -16,6 +16,7 @@ githubIssuesApp = angular.module('githubIssuesApp', [
     'ngTouch'
     'ngAnimate'
     'angular-loading-bar'
+    'angucomplete-alt'
     'cgBusy'
 
   ])
@@ -85,7 +86,7 @@ githubIssuesApp.run ->
   console.log 'ng-ready'
 
   # jQuery DOM ready
-  # $ ->
+  $ ->
     # Toggle all tooltips
-    # do $('.init-tooltip').tooltip
+    do $('.init-tooltip').tooltip
 

@@ -1,27 +1,20 @@
 <div class="row">
 
+  <!-- Filter sidebar -->
   <div class="col-xs-3">
 
-    <div class="panel panel-default filters">
-      <div class="panel-body">
+    <!-- Repos Directive -->
+    <repos ng-model="repo"></repos>
 
-        <!-- Repos Directive -->
-        <repos></repos>
-
-        <orgs></orgs>
-        Filter
-        <hr/>
-        Filter
-        <hr/>
-        Filter
-      </div>
-    </div>
+    <!-- Orgs Directive -->
+    <orgs></orgs>
 
   </div>
 
+  <!-- Issues Column -->
   <div class="col-xs-9">
 
-  <issue></issue>
+    <issue></issue>
 
   </div>
 

@@ -1,0 +1,38 @@
+<div id="repos_filter" class="panel panel-default filters">
+
+  <div class="panel-heading">
+
+      <!-- Refresh Action -->
+      <span class="octicon octicon-repo"></span> Repositories
+      <a ng-click="refresh(true)">
+        <i ng-class="{'animated': loading}" class="faa-spin glyphicon glyphicon-refresh pull-right text-muted"></i>
+      </a>
+
+  </div>
+
+  <div class="panel-body">
+
+      <!-- Selected Repo Tag -->
+      <div ng-show="repo" class="alert btn-primary">
+          <!-- Clear Repo Selection -->
+          <button type="button" ng-click="clear()" class="close">×</button>
+          {{repo.title}}
+      </div>
+
+      <!-- Repo Select List -->
+      <angucomplete-alt
+        ng-hide="repo"
+        placeholder="Search..."
+        pause="100"
+        selected-object="repo"
+        local-data="repos"
+        search-fields="name"
+        title-field="name"
+        minlength="1"
+        match-class="repo_match"
+        input-class="form-control form-control-small"
+      ></angucomplete-alt>
+
+  </div>
+
+</div>
