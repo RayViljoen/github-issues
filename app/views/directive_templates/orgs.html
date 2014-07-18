@@ -1,9 +1,9 @@
-<div id="repos_filter" class="panel panel-default input_filter">
+<div id="orgs_filter" class="panel panel-default input_filter">
 
   <div class="panel-heading">
 
       <!-- Refresh Action -->
-      <span class="octicon octicon-repo"></span>Repositories
+      <span class="octicon octicon-organization"></span>Orginizations
       <a ng-click="refresh(true)">
         <i ng-class="{'animated': loading}" class="faa-spin glyphicon glyphicon-refresh pull-right text-muted"></i>
       </a>
@@ -12,22 +12,24 @@
 
   <div class="panel-body">
 
-      <!-- Selected Repo Tag -->
-      <div ng-show="repo">
-          <!-- Clear Repo Selection -->
+      <!-- Selected Org Tag -->
+      <div ng-show="org">
+          <!-- Clear Org Selection -->
           <button type="button" ng-click="clear()" class="close">×</button>
-          {{repo.title}}
+          <img ng-src="{{org.image}}" alt="{{org.title}}" class="org_icon"> {{org.title}}
       </div>
 
-      <!-- Repo Select List -->
+      <!-- Org Select List -->
       <angucomplete-alt
-        ng-hide="repo"
+        ng-hide="org"
         placeholder="Search..."
         pause="100"
-        selected-object="repo"
-        local-data="repos"
-        search-fields="name"
-        title-field="name"
+        selected-object="org"
+        local-data="orgs"
+        search-fields="login"
+        clear-selected="true"
+        title-field="login"
+        image-field="avatar_url"
         minlength="1"
         match-class="repo_match"
         input-class="form-control form-control-small"

@@ -29,9 +29,9 @@ angular.module('githubIssuesApp')
 
           # Apply repos
           $scope.repos = repos
+
           # Stop animation
           $scope.loading = no
-
 
       # Called when removing repo filter
       $scope.clear = ->
