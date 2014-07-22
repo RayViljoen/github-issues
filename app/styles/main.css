@@ -10,6 +10,13 @@ body {
 }
 
 /*******************************************************
+ *   Typography
+ ******************************************************/
+
+.white { color: white; }
+.black { color: black; }
+
+/*******************************************************
  *   Force pointer on all font-icons, links & buttons
  ******************************************************/
 button, button .mega-octicon, button .octicon,
@@ -85,8 +92,26 @@ a, a .mega-octicon, a .octicon {
  *   Misc
  ******************************************************/
 
-.input_filter .octicon {
+.panel-heading .octicon {
   margin-right: 5px;
+}
+
+#owners_filter li .octicon,
+#owners_filter li img {
+  width: 23px;
+  height: 20px;
+  text-align: center;
+  padding-right: 3px;
+}
+
+#owners_filter li img {
+  position: relative;
+  bottom: 2px;
+}
+
+
+#owners_filter .nav a {
+  color: black;
 }
 
 /*******************************************************

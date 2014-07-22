@@ -41,7 +41,7 @@ githubIssuesApp.config (
 
   # Route config for all issue summary paths
   issuesMainCnf =
-    templateUrl: 'views/issues.main.html'
+    templateUrl: '/views/issues.main.html'
     controller: 'IssuesCtrl'
     reloadOnSearch: no
 
@@ -50,18 +50,27 @@ githubIssuesApp.config (
   #################################
   $routeProvider
 
+    # Home
+    .when '/', {templateUrl: '/views/home.html'}
+
     # Issues Summary. Signed in home
-    .when '/', issuesMainCnf
+    .when '/issues', issuesMainCnf
 
-    # Issues Summary for specific repo.
-    .when '/repo/:repo', issuesMainCnf
+    # Issues Summary for user
+    .when '/user/issues', issuesMainCnf
 
-    # Issues Summary for specific orginisation.
-    .when '/org/:org', issuesMainCnf
+    # Issues Summary for specific repo
+    .when '/repos/:owner/:repo/issues', issuesMainCnf
+
+    # Issues Summary for org
+    .when '/orgs/:org/issues', issuesMainCnf
+
+    # Single issue
+    .when '/repos/:owner/:repo/issues/:number', issuesMainCnf
 
     # Error (404), but error is a bit for app-like
     .when '/error',
-      templateUrl: 'views/error.html'
+      templateUrl: '/views/error.html'
       controller: 'ErrorCtrl'
 
     # Redirect any unfound requests to /error
@@ -80,13 +89,30 @@ githubIssuesApp.config (
 ###*
  # Initialise scripts etc
 ###
-githubIssuesApp.run ->
+githubIssuesApp.run ($rootScope, $location, oauth) ->
 
-  # Initialise tasks
-  console.log 'ng-ready'
+  #####################################################
+  #               Auth Routing
+  #####################################################
 
-  # jQuery DOM ready
-  $ ->
-    # Toggle all tooltips
-    do $('.init-tooltip').tooltip
+  # Prevent / when signed in. /issues become home
+  $rootScope.$on '$locationChangeSuccess', ->
+    if $location.path() is '/' and oauth.isSignedIn()
+       $location.path '/issues'
+
+  # Make sure homepage is redirected to /issues when signing in
+  $rootScope.$on 'oauth_signin', ->
+    if $location.path() is '/' and oauth.isSignedIn()
+      $location.path '/issues'
+
+  # Go home when signing out
+  $rootScope.$on 'oauth_signout', ->
+    $location.path '/'
+
+  #####################################################
+
+  # # jQuery DOM ready
+  # $ ->
+  #   # Toggle all tooltips
+  #   do $('.init-tooltip').tooltip
 

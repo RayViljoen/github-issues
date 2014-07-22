@@ -13,13 +13,13 @@ angular.module('githubIssuesApp')
     restrict: 'E'
 
     # Bind selected repo to standard ngModel
-    scope: { repo: '=ngModel' }
+    scope: { repo: '=ngModel', owner: '=' }
 
     # Repo Directive Controller
-    controller: ($scope, github) ->
+    controller: ($scope, github, $interval) ->
 
-      # Fresh set of repos
-      do $scope.refresh = (refresh=no) ->
+      # Get repos
+      do $scope.load = (refresh=no) ->
 
         # Start loading animation
         $scope.loading = yes
@@ -33,11 +33,9 @@ angular.module('githubIssuesApp')
           # Stop animation
           $scope.loading = no
 
+
       # Called when removing repo filter
       $scope.clear = ->
-
-        # Clear input text
-        $('angucomplete-alt input').val null
 
         # Unset scope repo
         $scope.repo = ''

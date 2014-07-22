@@ -1,0 +1,39 @@
+
+<div ng-show="orgs.length" id="owners_filter" class="panel panel-default">
+
+  <div class="panel-heading">
+
+      <span class="octicon octicon-organization"></span>Owner
+
+      <!-- Refresh Action -->
+      <a ng-click="load(true)" ng-hide="owner" title="Update Owners">
+        <i ng-class="{'animated': loading}" class="faa-spin glyphicon glyphicon-refresh pull-right text-muted"></i>
+      </a>
+
+      <!-- Clear Action -->
+      <a ng-click="clear()" ng-show="owner">
+        <i class="glyphicon glyphicon-remove pull-right text-muted"></i>
+      </a>
+
+  </div>
+
+  <div class="panel-body">
+
+  <ul class="nav nav-pills nav-stacked">
+
+    <!-- User -->
+    <li>
+      <a href="/user/issues" ng-click="setOwner('me')"><span class="octicon octicon-person"></span> My Repos</a>
+    </li>
+
+    <!-- Orginizations -->
+    <li ng-repeat="org in orgs track by org.id">
+      <a href="/orgs/{{org.login}}/issues" ng-click="setOwner(org.login)">
+        <img ng-src="{{org.avatar_url}}"> {{org.login}}</a>
+    </li>
+
+  </ul>
+
+  </div>
+
+</div>

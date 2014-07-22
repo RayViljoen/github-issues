@@ -2,10 +2,16 @@
 
   <div class="panel-heading">
 
-      <!-- Refresh Action -->
       <span class="octicon octicon-repo"></span>Repositories
-      <a ng-click="refresh(true)">
+
+      <!-- Refresh Action -->
+      <a ng-click="load(true)" ng-hide="repo" title="Update Repos">
         <i ng-class="{'animated': loading}" class="faa-spin glyphicon glyphicon-refresh pull-right text-muted"></i>
+      </a>
+
+      <!-- Clear Action -->
+      <a ng-click="clear()" ng-show="repo">
+        <i class="glyphicon glyphicon-remove pull-right text-muted"></i>
       </a>
 
   </div>
@@ -13,11 +19,7 @@
   <div class="panel-body">
 
       <!-- Selected Repo Tag -->
-      <div ng-show="repo">
-          <!-- Clear Repo Selection -->
-          <button type="button" ng-click="clear()" class="close">×</button>
-          {{repo.title}}
-      </div>
+      <div ng-show="repo" class="btn btn-primary btn-block">{{repo.title}}</div>
 
       <!-- Repo Select List -->
       <angucomplete-alt
@@ -28,6 +30,7 @@
         local-data="repos"
         search-fields="name"
         title-field="name"
+        clear-selected="true"
         minlength="1"
         match-class="repo_match"
         input-class="form-control form-control-small"

@@ -10,18 +10,17 @@
     <meta name="description" content="">
 
     <!-- build:css(.) styles/vendor.css -->
-    <!-- <link rel="stylesheet" href="bower_components/bootswatch/spacelab/bootstrap.css" /> -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/octicons/octicons/octicons.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome-animation/dist/font-awesome-animation.css" />
-    <link rel="stylesheet" href="bower_components/github-markdown-css/github-markdown.css" />
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/src/loading-bar.css" />
-    <link rel="stylesheet" href="bower_components/angular-busy/dist/angular-busy.css" />
-    <link rel="stylesheet" href="bower_components/angucomplete-alt/angucomplete-alt.css" />
+    <link rel="stylesheet" href="/bower_components/bootswatch/spacelab/bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/octicons/octicons/octicons.css" />
+    <link rel="stylesheet" href="/bower_components/font-awesome-animation/dist/font-awesome-animation.css" />
+    <link rel="stylesheet" href="/bower_components/github-markdown-css/github-markdown.css" />
+    <link rel="stylesheet" href="/bower_components/angular-loading-bar/src/loading-bar.css" />
+    <link rel="stylesheet" href="/bower_components/angular-busy/dist/angular-busy.css" />
+    <link rel="stylesheet" href="/bower_components/angucomplete-alt/angucomplete-alt.css" />
     <!-- endbuild -->
 
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="/styles/main.css">
     <!-- endbuild -->
 
   </head>
@@ -60,28 +59,36 @@
       <![endif]-->
 
       <!-- Main Container -->
-      <!-- <div class="continer-fluid" role="main"> -->
       <div class="container" role="main">
 
         <!-- Log In Form -->
-        <div ng-if="!oauth.isSignedIn()" class="jumbotron">
+        <div ng-if="!oauth.isSignedIn() && !isHome()">
           <div class="container">
             <div class="row">
-              <div class="col-md-8 text-center text-left-md">
-                <h1>
-                  GitHub Issues<br/>
-                  <small>Manage Issues Like a Boss</small>
-                </h1>
+              <div class="col-md-12 text-center text-warning">
+                <p>You need to be signed in to view this content</p>
               </div>
-              <div class="col-md-4 text-center signin">
-                <button type="button" class="btn-lg btn-primary" ng-click="oauth.signIn()"><span class="mega-octicon octicon-mark-github"></span>Sign In</button>
+            </div>
+          </div>
+          <div class="jumbotron">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-8 text-center text-left-md">
+                  <h1>
+                    GitHub Issues<br/>
+                    <small>Manage Issues Like a Boss</small>
+                  </h1>
+                </div>
+                <div class="col-md-4 text-center signin">
+                  <button type="button" class="btn-lg btn-primary" ng-click="oauth.signIn()"><span class="mega-octicon octicon-mark-github"></span>Sign In</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Angular Route Render -->
-        <div ng-view="" ng-if="oauth.isSignedIn()"></div>
+        <div ng-view="" ng-if="oauth.isSignedIn() || isHome()"></div>
 
         <!-- Footer -->
         <footer>
@@ -110,34 +117,33 @@
     <![endif]-->
 
     <!-- build:js(.) /scripts/vendor.js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/oauth-js/dist/oauth.js"></script>
-    <script src="bower_components/localforage/dist/localforage.js"></script>
-    <script src="bower_components/angular-localForage/dist/angular-localForage.js"></script>
-    <script src="bower_components/lodash/dist/lodash.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
-    <script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>
-    <script src="bower_components/angular-busy/dist/angular-busy.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/oauth-js/dist/oauth.js"></script>
+    <script src="/bower_components/localforage/dist/localforage.js"></script>
+    <script src="/bower_components/angular-localForage/dist/angular-localForage.js"></script>
+    <script src="/bower_components/lodash/dist/lodash.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-loading-bar/src/loading-bar.js"></script>
+    <script src="/bower_components/angucomplete-alt/angucomplete-alt.js"></script>
+    <script src="/bower_components/angular-busy/dist/angular-busy.js"></script>
+    <script src="/bower_components/angular-touch/angular-touch.js"></script>
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) /scripts/scripts.js -->
-        <script src="scripts/config.js"></script>
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/services/github.js"></script>
-        <script src="scripts/services/oauth.js"></script>
-        <script src="scripts/directives/issue.js"></script>
-        <script src="scripts/directives/paginate.js"></script>
-        <script src="scripts/controllers/issues.js"></script>
-        <script src="scripts/controllers/error.js"></script>
-        <script src="scripts/directives/repos.js"></script>
-        <script src="scripts/directives/orgs.js"></script>
-        <script src="scripts/directives/sidebar.js"></script>
+        <script src="/scripts/config.js"></script>
+        <script src="/scripts/app.js"></script>
+        <script src="/scripts/controllers/main.js"></script>
+        <script src="/scripts/services/github.js"></script>
+        <script src="/scripts/services/oauth.js"></script>
+        <script src="/scripts/directives/issue.js"></script>
+        <script src="/scripts/directives/paginate.js"></script>
+        <script src="/scripts/controllers/issues.js"></script>
+        <script src="/scripts/controllers/error.js"></script>
+        <script src="/scripts/directives/repos.js"></script>
+        <script src="/scripts/directives/owners.js"></script>
         <!-- endbuild -->
 
   </body>
