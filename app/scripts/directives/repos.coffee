@@ -13,13 +13,28 @@ angular.module('githubIssuesApp')
     restrict: 'E'
 
     # Bind selected repo to standard ngModel
-    scope: { repo: '=ngModel', owner: '=' }
+    scope: { repo: '=', owner: '=' }
 
     # Repo Directive Controller
-    controller: ($scope, github, $interval) ->
+    controller: ($scope, $location, github) ->
 
-      # Get repos
-      do $scope.load = (refresh=no) ->
+      # If repo isn't set then watch for it's update
+      # to set the new path
+      unless $scope.repo then $scope.$watch 'repo', ->
+
+        # Avoid initial watch trigger as repo isn't set yet
+        return unless $scope.repo
+
+        # Get route params
+        owner = $scope.repo.originalObject.owner.login
+        name = $scope.repo.originalObject.name
+
+        # Set new url
+        $location.path "/repos/#{owner}/#{name}/issues"
+
+
+      # Loads repos
+      $scope.load = (refresh=no) ->
 
         # Start loading animation
         $scope.loading = yes
@@ -34,9 +49,6 @@ angular.module('githubIssuesApp')
           $scope.loading = no
 
 
-      # Called when removing repo filter
-      $scope.clear = ->
-
-        # Unset scope repo
-        $scope.repo = ''
+      # Load repos on ctrl init if repo isn't set
+      do $scope.load unless $scope.repo
 

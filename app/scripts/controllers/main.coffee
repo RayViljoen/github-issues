@@ -13,7 +13,10 @@ angular.module('githubIssuesApp')
     # Bind to Oauth service
     $scope.oauth = oauth
 
-    $scope.isHome = -> $location.path() is '/'
+    # Check if route view should be displayd
+    $scope.showRouteView = ->
+      path = $location.path()
+      oauth.isSignedIn() or path is '/' or path is '/error'
 
     # Get user credentials
     do updateUserInfo = ->
@@ -25,18 +28,12 @@ angular.module('githubIssuesApp')
       github.getCached('/user').then (data) ->
         $scope.user = data
 
-
     # Scroll page back to top
     $scope.top = ->
       $('html, body').animate {scrollTop: 0}, 500
       return
 
-    # Listen for signin and prepare UI
-    # -----------------------------------------------------------
-    # Important: If the $scope isn't being manipulated
-    # in this event by some method, then $scope.$apply must
-    # be called in order to update to the new signed in view
-    # -----------------------------------------------------------
+    # Update user when signing in
     $scope.$on 'oauth_signin', updateUserInfo
 
     # $scope.$on 'oauth_fail', ->

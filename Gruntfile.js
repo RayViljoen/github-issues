@@ -92,7 +92,7 @@ module.exports = function (grunt) {
         options: {
             configFile: 'coffeelint.json'
         },
-        app: ['app/scripts/coffee/**/*.coffee']
+        app: ['app/scripts/**/*.coffee']
     },
 
     // Coffee compile

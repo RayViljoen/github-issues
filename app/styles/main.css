@@ -9,6 +9,8 @@ body {
   border-radius: 4px;
 }
 
+.ng-cloak { display: none !important; }
+
 /*******************************************************
  *   Typography
  ******************************************************/
@@ -16,17 +18,21 @@ body {
 .white { color: white; }
 .black { color: black; }
 
+
 /*******************************************************
  *   Force pointer on all font-icons, links & buttons
  ******************************************************/
+
 button, button .mega-octicon, button .octicon,
 a, a .mega-octicon, a .octicon {
   cursor: pointer;
 }
 
+
 /*******************************************************
  *   Nav bar
  ******************************************************/
+
 #avatar {
   margin-top: -5px;
 }
@@ -36,6 +42,7 @@ a, a .mega-octicon, a .octicon {
 .navbar-nav.navbar-right:last-child { margin-right: -15px; }
 .navbar-nav { margin: 0; }
 .navbar-nav > li { float: left; }
+
 
 /*******************************************************
  *   Signin
@@ -53,9 +60,6 @@ a, a .mega-octicon, a .octicon {
 .signin button .mega-octicon {
   padding-right: 12px;
 }
-
-
-
 
 
 /*******************************************************
@@ -109,17 +113,19 @@ a, a .mega-octicon, a .octicon {
   bottom: 2px;
 }
 
-
 #owners_filter .nav a {
   color: black;
 }
 
+
 /*******************************************************
  *   Browsehappy banner
  ******************************************************/
+
 #browsehappy {
   padding: 25px 0;
 }
+
 
 /*******************************************************
  *   Footer
@@ -129,9 +135,11 @@ footer {
   padding: 30px 0 10px;
 }
 
+
 /*******************************************************
  *   ngAnimate transitions
  ******************************************************/
+
 .animate-enter,
 .animate-leave
 {
@@ -161,6 +169,7 @@ footer {
     height: 30px;
 }
 
+
 /*******************************************************
  *   Responsive text-align
  ******************************************************/
@@ -185,9 +194,6 @@ footer {
 
   .text-center-sm, .text-center-xs { text-align: center; }
   .text-right-sm, .text-right-xs { text-align: right; }
-
-
-
 }
 
 /* Medium devices (desktops, 992px and up) */
@@ -195,7 +201,6 @@ footer {
 
   .text-center-md, .text-center-sm, .text-center-xs { text-align: center; }
   .text-right-md, .text-right-sm, .text-right-xs { text-align: right; }
-
 }
 
 /* Large devices (large desktops, 1200px and up) */
@@ -203,7 +208,6 @@ footer {
 
   .text-center-lg, .text-center-md, .text-center-sm, .text-center-xs { text-align: center; }
   .text-right-lg, .text-right-md, .text-right-sm, .text-right-xs { text-align: right; }
-
 }
 
 

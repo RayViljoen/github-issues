@@ -51,7 +51,8 @@ githubIssuesApp.config (
   $routeProvider
 
     # Home
-    .when '/', {templateUrl: '/views/home.html'}
+    .when '/',
+      templateUrl: '/views/home.html'
 
     # Issues Summary. Signed in home
     .when '/issues', issuesMainCnf
@@ -71,7 +72,6 @@ githubIssuesApp.config (
     # Error (404), but error is a bit for app-like
     .when '/error',
       templateUrl: '/views/error.html'
-      controller: 'ErrorCtrl'
 
     # Redirect any unfound requests to /error
     .otherwise redirectTo: '/error'
@@ -95,19 +95,24 @@ githubIssuesApp.run ($rootScope, $location, oauth) ->
   #               Auth Routing
   #####################################################
 
+  ###
+   # Take app to the main issues url if signed in
+   # and on homepage.
+   # Also applies scope if not already in progress
+  ###
+  gotoIssues = ->
+      if $location.path() is '/' and oauth.isSignedIn()
+        $location.path '/issues'
+        do $rootScope.$apply unless $rootScope.$$phase
+
   # Prevent / when signed in. /issues become home
-  $rootScope.$on '$locationChangeSuccess', ->
-    if $location.path() is '/' and oauth.isSignedIn()
-       $location.path '/issues'
+  $rootScope.$on '$locationChangeSuccess', gotoIssues
 
   # Make sure homepage is redirected to /issues when signing in
-  $rootScope.$on 'oauth_signin', ->
-    if $location.path() is '/' and oauth.isSignedIn()
-      $location.path '/issues'
+  $rootScope.$on 'oauth_signin', gotoIssues
 
   # Go home when signing out
-  $rootScope.$on 'oauth_signout', ->
-    $location.path '/'
+  $rootScope.$on 'oauth_signout', -> $location.path '/'
 
   #####################################################
 

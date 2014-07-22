@@ -8,13 +8,17 @@
  # Controller of the githubIssuesApp
 ###
 angular.module('githubIssuesApp')
-  .controller 'IssuesCtrl', ($scope, github) ->
+  .controller 'IssuesCtrl', ($scope, $location, $routeParams, github) ->
 
-    # Get orgs
-    github.getCached('/user/orgs').then (orgs) ->
+    # Get possible routeparams
+    $scope.owner = $routeParams.owner or $routeParams.org
+    $scope.repo = $routeParams.repo
 
-      # Apply orgs
-      $scope.orgs = orgs
+    # Also check for users own repos being used
+    if $location.path() is '/user/issues'
+      $scope.owner = $scope.$parent.user.login
 
-      # Stop animation
-      $scope.loading = no
+
+    # Load issues
+    github.query $location.path(), $location.search(), yes
+    .then (res) -> console.log res

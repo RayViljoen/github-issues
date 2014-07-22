@@ -1,4 +1,4 @@
-<div id="repos_filter" class="panel panel-default input_filter">
+<div id="repos_filter" class="panel panel-default input_filter ng-cloak">
 
   <div class="panel-heading">
 
@@ -10,7 +10,7 @@
       </a>
 
       <!-- Clear Action -->
-      <a ng-click="clear()" ng-show="repo">
+      <a ng-href="/issues" ng-show="repo">
         <i class="glyphicon glyphicon-remove pull-right text-muted"></i>
       </a>
 
@@ -19,7 +19,7 @@
   <div class="panel-body">
 
       <!-- Selected Repo Tag -->
-      <div ng-show="repo" class="btn btn-primary btn-block">{{repo.title}}</div>
+      <div ng-show="repo" class="btn btn-primary btn-block">{{repo}}</div>
 
       <!-- Repo Select List -->
       <angucomplete-alt

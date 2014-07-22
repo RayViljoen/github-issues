@@ -1,5 +1,5 @@
 
-<div ng-show="orgs.length" id="owners_filter" class="panel panel-default">
+<div id="owners_filter" class="panel panel-default ng-cloak">
 
   <div class="panel-heading">
 
@@ -11,7 +11,7 @@
       </a>
 
       <!-- Clear Action -->
-      <a ng-click="clear()" ng-show="owner">
+      <a href="/issues" ng-show="owner">
         <i class="glyphicon glyphicon-remove pull-right text-muted"></i>
       </a>
 
@@ -19,20 +19,23 @@
 
   <div class="panel-body">
 
-  <ul class="nav nav-pills nav-stacked">
+    <!-- Selected Repo Tag -->
+    <div ng-show="owner" class="btn btn-primary btn-block">{{owner}}</div>
 
-    <!-- User -->
-    <li>
-      <a href="/user/issues" ng-click="setOwner('me')"><span class="octicon octicon-person"></span> My Repos</a>
-    </li>
+    <ul ng-hide="owner" class="nav nav-pills nav-stacked">
 
-    <!-- Orginizations -->
-    <li ng-repeat="org in orgs track by org.id">
-      <a href="/orgs/{{org.login}}/issues" ng-click="setOwner(org.login)">
-        <img ng-src="{{org.avatar_url}}"> {{org.login}}</a>
-    </li>
+      <!-- User -->
+      <li>
+        <a href="/user/issues" ng-click="setOwner('me')"><span class="octicon octicon-person"></span> My Repos</a>
+      </li>
 
-  </ul>
+      <!-- Orginizations -->
+      <li ng-repeat="org in orgs track by org.id">
+        <a href="/orgs/{{org.login}}/issues" ng-click="setOwner(org.login)">
+          <img ng-src="{{org.avatar_url}}"> {{org.login}}</a>
+      </li>
+
+    </ul>
 
   </div>
 
